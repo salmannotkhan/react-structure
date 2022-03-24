@@ -1,0 +1,11 @@
+{
+    "compilerOptions": {
+        "baseUrl": "src",
+        "jsx": "react-jsx",
+        "alwaysStrict": true,
+        "rootDir": "src",
+        "target": "ES6",
+        "moduleResolution": "Node"
+    },
+    "include": ["src"]
+}

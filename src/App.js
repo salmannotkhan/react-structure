@@ -1,25 +1,38 @@
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import "assets/css/App.css";
+import Dashboard from "components/Dashboard";
+import DashboardLayout from "components/DashboardLayout";
+import Home from "components/Home";
+import ProtectedRoute from "components/ProtectedRoute";
+import Login from "components/Login";
+import { useDispatch } from "react-redux";
+import { useEffect } from "react";
+import { setUser } from "store/actions";
+import { getCurrentUser } from "helpers/getCurrentUser";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    const dispatch = useDispatch();
+    useEffect(() => {
+        getCurrentUser().then((user) => dispatch(setUser(user)));
+    }, [dispatch]);
+    return (
+        <Router>
+            <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="login" element={<Login />} />
+                <Route path="dashboard" element={<DashboardLayout />}>
+                    <Route
+                        index
+                        element={
+                            <ProtectedRoute>
+                                <Dashboard />
+                            </ProtectedRoute>
+                        }
+                    />
+                </Route>
+            </Routes>
+        </Router>
+    );
 }
 
 export default App;
