@@ -4,7 +4,7 @@ import http from "./http";
 
 export const getCurrentUser = async () => {
     const userToken = localStorage.getItem("token");
-    if (!userToken) return;
+    if (!userToken) return null;
     const userData = localStorage.getItem("userData");
     if (userData) {
         const decryptedData = aes.decrypt(
@@ -17,7 +17,7 @@ export const getCurrentUser = async () => {
         } catch (err) {
             console.log(err);
         }
-        return;
+        return null;
     }
     try {
         const response = await http.get("customers/me");
@@ -32,4 +32,5 @@ export const getCurrentUser = async () => {
     } catch (err) {
         console.log(err);
     }
+    return null;
 };
