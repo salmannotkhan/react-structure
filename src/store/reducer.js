@@ -1,7 +1,7 @@
 import { SET_USER } from "./actionTypes";
 
 const initialState = {
-    currentUser: null,
+    currentUser: {},
 };
 
 export const reducer = (state = initialState, action) => {
