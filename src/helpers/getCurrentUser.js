@@ -1,6 +1,6 @@
 import aes from "crypto-js/aes";
 import encUtf8 from "crypto-js/enc-utf8";
-import http from "./http";
+import http from "config/http";
 
 export const getCurrentUser = async () => {
     const userToken = localStorage.getItem("token");

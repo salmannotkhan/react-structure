@@ -1,10 +1,10 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import "assets/css/App.css";
-import Dashboard from "components/Dashboard";
+import Dashboard from "pages/Dashboard";
 import DashboardLayout from "components/DashboardLayout";
-import Home from "components/Home";
+import Home from "pages/Home";
 import ProtectedRoute from "components/ProtectedRoute";
-import Login from "components/Login";
+import Login from "pages/Login";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { setUser } from "store/actions";

@@ -1,6 +1,6 @@
 import aes from "crypto-js/aes";
 import { Field, Form, Formik } from "formik";
-import http from "helpers/http";
+import http from "config/http";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -18,9 +18,7 @@ export default function Login() {
                 "integration/customer/token",
                 JSON.stringify(values)
             );
-            if (response.status === 401) {
-                setAuthError(response.data.message);
-            } else if (response.status === 200) {
+            if (response.status === 200) {
                 const token = response.data.replaceAll('"', "");
                 const encryptedToken = aes.encrypt(
                     token,
@@ -30,6 +28,8 @@ export default function Login() {
                 const userProfile = await http.get("customers/me");
                 dispatch(setUser(userProfile.data));
                 navigate("/dashboard");
+            } else {
+                setAuthError(response.data.message);
             }
         } catch (err) {
             console.log(err.message);
@@ -50,10 +50,10 @@ export default function Login() {
             }}
             onSubmit={handleSubmit}>
             <Form>
-                {authError && <div>{authError}</div>}
                 <Field type="text" name="username" />
                 <Field type="password" name="password" />
                 <button type="submit">Login</button>
+                {authError && <div>{authError}</div>}
             </Form>
         </Formik>
     );
